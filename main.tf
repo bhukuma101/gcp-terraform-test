@@ -4,21 +4,31 @@ resource "google_service_account" "default" {
 }
 
 resource "google_compute_instance" "default" {
-  name         = "example-vm"
-  machine_type = "n1-standard-1"
+  name         = "test"
+  machine_type = "e2-medium"
   zone         = "us-central1-a"
+
+  tags = ["foo", "bar"]
 
   boot_disk {
     initialize_params {
-      image = "ubuntu-1604-lts"
+      image = "debian-cloud/debian-11"
+      labels = {
+        my_label = "value"
+      }
     }
+  }
+
+  // Local SSD disk
+  scratch_disk {
+    interface = "SCSI"
   }
 
   network_interface {
     network = "default"
 
     access_config {
-      // Include this section to give the VM an external IP address
+      // Ephemeral public IP
     }
   }
 
@@ -26,7 +36,10 @@ resource "google_compute_instance" "default" {
     foo = "bar"
   }
 
+  metadata_startup_script = "echo hi > /test.txt"
+
   service_account {
+    # Google recommends custom service accounts that have cloud-platform scope and permissions granted via IAM Roles.
     email  = jenkins@devops-392615.iam.gserviceaccount.com
     scopes = ["cloud-platform"]
   }
