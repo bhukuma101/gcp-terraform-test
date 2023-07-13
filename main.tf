@@ -1,5 +1,5 @@
 provider "google" {
-  project     = "tcb-project-371706"
+  project     = "devops-392615"
   #credentials = file("tcb-project-371706-b114ce01e529.json")
   region      = "us-east1"
 
