@@ -1,3 +1,8 @@
+resource "google_service_account" "default" {
+  account_id   = "jenkins"
+  display_name = "jenkins"
+}
+
 resource "google_compute_instance" "default" {
   name         = "example-vm"
   machine_type = "n1-standard-1"
