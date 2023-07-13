@@ -1,9 +1,9 @@
-resource "google_service_account" {
+resource "google_service_account" "test1" {
   account_id   = "jenkins"
   display_name = "jenkins"
 }
 
-resource "google_compute_instance"  {
+resource "google_compute_instance" "test1"  {
   name         = "test"
   machine_type = "e2-medium"
   zone         = "us-central1-a"
