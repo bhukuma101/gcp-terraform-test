@@ -1,22 +1,28 @@
-resource "google_service_account" "default" {
-  account_id   = "devops-392615"
-  display_name = "jenkins"
-}
-
-resource "google_compute_instance" "default" {
-  name         = "test"
-  machine_type = "e2-medium"
+resource "google_compute_instance" "example" {
+  name         = "example-vm"
+  machine_type = "n1-standard-1"
   zone         = "us-central1-a"
-
-  tags = ["foo", "bar"]
 
   boot_disk {
     initialize_params {
-      image = "debian-cloud/debian-11"
-      labels = {
-        my_label = "value"
-      }
+      image = "ubuntu-1604-lts"
     }
   }
-}
 
+  network_interface {
+    network = "default"
+
+    access_config {
+      // Include this section to give the VM an external IP address
+    }
+  }
+
+  metadata = {
+    foo = "bar"
+  }
+
+  service_account {
+    email  = jenkins@devops-392615.iam.gserviceaccount.com
+    scopes = ["cloud-platform"]
+  }
+}
