@@ -1,23 +1,20 @@
-resource "google_compute_instance" "example" {
-  name         = "example-vm"
-  machine_type = "n1-standard-1"
+resource "google_service_account" "default" {
+  account_id   = "102578102719547752459"
+  display_name = "jenkins"
+}
+
+resource "google_compute_instance" "default" {
+  name         = "test"
+  machine_type = "e2-medium"
   zone         = "us-central1-a"
+
+  tags = ["foo", "bar"]
 
   boot_disk {
     initialize_params {
-      image = "ubuntu-1604-lts"
+      image = "debian-cloud/debian-11"
+      labels = {
+        my_label = "value"
+      }
     }
   }
-
-  network_interface {
-    network = "default"
-
-    access_config {
-      // Include this section to give the VM an external IP address
-    }
-  }
-
-  metadata = {
-    foo = "bar"
-  }
-}
