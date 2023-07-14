@@ -1,6 +1,6 @@
 provider "google" {
   project     = "devops-392615"
-  credentials = file("/home/bhupendra/devops-cred.json")
+#  credentials = file("/home/bhupendra/devops-cred.json")
   region      = "us-east1"
 
 }
